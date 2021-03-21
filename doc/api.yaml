@@ -76,6 +76,8 @@ components:
           type: string
         password:
           type: string
+        filedata:
+          type: binary
     Auth:
       type: object
       properties:
