@@ -13,6 +13,13 @@ class AppError extends Error {
   }
 }
 
+class NotFoundPhotoError extends AppError {
+  constructor(entity, message) {
+    super(message || `Couldn't find ${entity}' photo`);
+    this.status = NOT_FOUND;
+  }
+}
+
 class NotFoundError extends AppError {
   constructor(entity, params, message) {
     super(
@@ -51,6 +58,7 @@ class AuthenticationError extends AppError {
 }
 
 module.exports = {
+  NOT_FOUND_PHOTO_ERROR: NotFoundPhotoError,
   NOT_FOUND_ERROR: NotFoundError,
   BAD_REQUEST_ERROR: BadRequestError,
   AUTHORIZATION_ERROR: AuthorizationError,

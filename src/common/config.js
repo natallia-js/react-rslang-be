@@ -17,5 +17,7 @@ module.exports = {
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
   JWT_EXPIRE_TIME: '4h',
   JWT_REFRESH_SECRET_KEY: process.env.JWT_REFRESH_SECRET_KEY,
-  JWT_REFRESH_EXPIRE_TIME: 4.5 * 60 * 60
+  JWT_REFRESH_EXPIRE_TIME: 4.5 * 60 * 60,
+  UPLOAD_DIR: path.join(__dirname, '../../uploads'),
+  UPLOADED_FILE_MAX_SIZE_IN_BYTES: 10 * 1024 * 1024
 };

@@ -5,7 +5,10 @@ const Schema = mongoose.Schema;
 
 const User = new Schema(
   {
-    name: String,
+    name: {
+      type: String,
+      trim: true
+    },
     email: {
       type: String,
       required: true,
@@ -16,6 +19,10 @@ const User = new Schema(
       required: true,
       trim: true,
       minlength: 8
+    },
+    photo: {
+      data: { type: Buffer },
+      contentType: { type: String }
     }
   },
   { collection: 'users' }

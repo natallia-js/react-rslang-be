@@ -19,6 +19,8 @@ const authenticate = async user => {
   return { ...tokens, userId: userEntity._id, name: userEntity.name };
 };
 
+const getPhoto = id => usersRepo.getPhoto(id);
+
 const get = id => usersRepo.get(id);
 
 const save = user => usersRepo.save(user);
@@ -31,4 +33,4 @@ const remove = async id => {
   await usersRepo.remove(id);
 };
 
-module.exports = { authenticate, get, save, update, remove };
+module.exports = { authenticate, getPhoto, get, save, update, remove };

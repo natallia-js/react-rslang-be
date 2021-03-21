@@ -1,5 +1,9 @@
 const User = require('./user.model');
-const { NOT_FOUND_ERROR, ENTITY_EXISTS } = require('../../errors/appErrors');
+const {
+  NOT_FOUND_PHOTO_ERROR,
+  NOT_FOUND_ERROR,
+  ENTITY_EXISTS
+} = require('../../errors/appErrors');
 const ENTITY_NAME = 'user';
 const MONGO_ENTITY_EXISTS_ERROR_CODE = 11000;
 
@@ -10,6 +14,18 @@ const getUserByEmail = async email => {
   }
 
   return user;
+};
+
+const getPhoto = async id => {
+  const user = await User.findOne({ _id: id });
+  if (!user) {
+    throw new NOT_FOUND_ERROR(ENTITY_NAME, { id });
+  }
+  if (!user.photo) {
+    throw new NOT_FOUND_PHOTO_ERROR(ENTITY_NAME);
+  }
+
+  return user.photo;
 };
 
 const get = async id => {
@@ -38,4 +54,4 @@ const update = async (id, user) =>
 
 const remove = async id => User.deleteOne({ _id: id });
 
-module.exports = { get, getUserByEmail, save, update, remove };
+module.exports = { getPhoto, get, getUserByEmail, save, update, remove };
