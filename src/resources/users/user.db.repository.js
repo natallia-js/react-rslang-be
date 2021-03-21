@@ -21,7 +21,7 @@ const getPhoto = async id => {
   if (!user) {
     throw new NOT_FOUND_ERROR(ENTITY_NAME, { id });
   }
-  if (!user.photo) {
+  if (!user.photo || JSON.stringify(user.photo) === '{}') {
     throw new NOT_FOUND_PHOTO_ERROR(ENTITY_NAME);
   }
 
