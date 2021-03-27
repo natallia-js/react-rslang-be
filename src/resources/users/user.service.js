@@ -19,8 +19,7 @@ const authenticate = async user => {
   return {
     ...tokens,
     userId: userEntity._id,
-    name: userEntity.name,
-    photo: userEntity.photo
+    name: userEntity.name
   };
 };
 
