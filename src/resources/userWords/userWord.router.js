@@ -10,6 +10,11 @@ router.get('/', async (req, res) => {
   res.status(OK).send(userWords.map(w => w.toResponse()));
 });
 
+router.get('/amount/deleted', async (req, res) => {
+  const deletedWordsAmount = await userWordService.getDeletedAmount(req.userId);
+  res.status(OK).send(deletedWordsAmount);
+});
+
 router.get('/:wordId', validator(wordId, 'params'), async (req, res) => {
   const word = await userWordService.get(req.params.wordId, req.userId);
   res.status(OK).send(word.toResponse());

@@ -9,6 +9,15 @@ servers:
 
 components:
   schemas:
+    DeletedWordsAmount:
+      type: object
+      properties:
+        group:
+          type: number
+        page:
+          type: number
+        count:
+          type: number
     Word:
       type: object
       properties:
@@ -401,6 +410,30 @@ paths:
         204:
           description: The user word has been deleted
         401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/words/amount/deleted:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users/Words
+      summary: Get number of deleted custom words
+      description: Get number of deleted custom words on each group page
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeletedWordsAmount"
+        402:
           $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/aggregatedWords:
     parameters:

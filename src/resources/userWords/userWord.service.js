@@ -4,6 +4,8 @@ const getAll = async userId => wordRepo.getAll(userId);
 
 const get = async (wordId, userId) => wordRepo.get(wordId, userId);
 
+const getDeletedAmount = async userId => wordRepo.getDeletedAmount(userId);
+
 const save = async (wordId, userId, userWord) =>
   wordRepo.save(wordId, userId, { ...userWord, wordId, userId });
 
@@ -13,9 +15,10 @@ const update = async (wordId, userId, userWord) =>
 const remove = async (wordId, userId) => wordRepo.remove(wordId, userId);
 
 module.exports = {
-  getAll,
   get,
+  getAll,
+  getDeletedAmount,
+  remove,
   save,
-  update,
-  remove
+  update
 };
