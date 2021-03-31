@@ -48,7 +48,7 @@ const getAll = async (userId, group, page, perPage, filter) => {
   );
 
   const matches = [];
-
+  console.log(group, page);
   if (group || group === 0) {
     matches.push({
       $match: {
@@ -77,6 +77,24 @@ const getAll = async (userId, group, page, perPage, filter) => {
   return await Word.aggregate([lookup, ...pipeline, ...matches, facet]);
 };
 
+const getAllFromDefinitePage = async (userId, group, page) => {
+  lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
+    userId
+  );
+
+  const matches = [];
+
+  if ((group || group === 0) && (page || page === 0)) {
+    matches.push({
+      $match: {
+        $and: [{ group, page }]
+      }
+    });
+  }
+
+  return await Word.aggregate([lookup, ...pipeline, ...matches]);
+};
+
 const get = async (wordId, userId) => {
   lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
     userId
@@ -96,4 +114,4 @@ const get = async (wordId, userId) => {
   return userWord;
 };
 
-module.exports = { getAll, get };
+module.exports = { getAll, getAllFromDefinitePage, get };
