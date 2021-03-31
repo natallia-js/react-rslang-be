@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
 const { addMethods } = require('../../utils/toResponse');
+
+const { Schema } = mongoose;
 
 const UserWordsSchema = new Schema(
   {
-    wordId: { type: mongoose.Schema.Types.ObjectID, required: true },
-    userId: { type: mongoose.Schema.Types.ObjectID, required: true },
+    wordId: { type: Schema.Types.ObjectId, required: true },
+    userId: { type: Schema.Types.ObjectId, required: true },
     difficulty: { type: String, required: false },
     optional: {
       type: Object,
