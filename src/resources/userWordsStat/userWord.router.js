@@ -8,4 +8,9 @@ router.get('/deletedWordsStat', async (req, res) => {
   res.status(OK).send(stat);
 });
 
+router.get('/hardWordsStat', async (req, res) => {
+  const stat = await userWordService.getHardWordsStatistic(req.userId);
+  res.status(OK).send(stat);
+});
+
 module.exports = router;
