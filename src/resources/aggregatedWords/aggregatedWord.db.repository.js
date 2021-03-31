@@ -48,7 +48,6 @@ const getAll = async (userId, group, page, perPage, filter) => {
   );
 
   const matches = [];
-  console.log(group, page);
   if (group || group === 0) {
     matches.push({
       $match: {
@@ -114,4 +113,8 @@ const get = async (wordId, userId) => {
   return userWord;
 };
 
-module.exports = { getAll, getAllFromDefinitePage, get };
+module.exports = {
+  getAll,
+  getAllFromDefinitePage,
+  get
+};

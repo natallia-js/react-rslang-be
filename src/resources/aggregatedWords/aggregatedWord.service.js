@@ -8,4 +8,8 @@ const getAllFromDefinitePage = async (userId, group, page) =>
 
 const get = async (wordId, userId) => wordRepo.get(wordId, userId);
 
-module.exports = { getAll, getAllFromDefinitePage, get };
+module.exports = {
+  getAll,
+  getAllFromDefinitePage,
+  get
+};

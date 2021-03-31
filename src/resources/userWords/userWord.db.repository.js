@@ -41,4 +41,10 @@ const update = async (wordId, userId, userWord) => {
 
 const remove = async (wordId, userId) => UserWord.deleteOne({ wordId, userId });
 
-module.exports = { getAll, get, save, update, remove };
+module.exports = {
+  getAll,
+  get,
+  save,
+  update,
+  remove
+};
