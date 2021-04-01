@@ -13,4 +13,9 @@ router.get('/hardWordsStat', async (req, res) => {
   res.status(OK).send(stat);
 });
 
+router.get('/studiedWordsStat', async (req, res) => {
+  const stat = await userWordService.getStudiedWordsStatistic(req.userId);
+  res.status(OK).send(stat);
+});
+
 module.exports = router;

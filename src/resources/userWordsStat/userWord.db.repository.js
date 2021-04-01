@@ -54,7 +54,22 @@ const getHardWordsStatistic = async userId => {
   return await UserWord.aggregate([...matches, lookup, ...pipeline, group]);
 };
 
+const getStudiesWordsStatistic = async userId => {
+  const matches = [];
+  matches.push({
+    $match: {
+      $and: [
+        { userId: mongoose.Types.ObjectId(userId) },
+        { 'optional.mode': 'studied' }
+      ]
+    }
+  });
+
+  return await UserWord.aggregate([...matches, lookup, ...pipeline, group]);
+};
+
 module.exports = {
   getDeletedWordsStatistic,
-  getHardWordsStatistic
+  getHardWordsStatistic,
+  getStudiesWordsStatistic
 };

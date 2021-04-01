@@ -6,7 +6,11 @@ const getDeletedWordsStatistic = async userId =>
 const getHardWordsStatistic = async userId =>
   wordRepo.getHardWordsStatistic(userId);
 
+const getStudiedWordsStatistic = async userId =>
+  wordRepo.getStudiedWordsStatistic(userId);
+
 module.exports = {
   getDeletedWordsStatistic,
-  getHardWordsStatistic
+  getHardWordsStatistic,
+  getStudiedWordsStatistic
 };
