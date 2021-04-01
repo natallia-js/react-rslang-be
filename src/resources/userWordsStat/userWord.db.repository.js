@@ -60,7 +60,7 @@ const getStudiedWordsStatistic = async userId => {
     $match: {
       $and: [
         { userId: mongoose.Types.ObjectId(userId) },
-        { 'optional.mode': 'studied' }
+        { $or: [{ 'optional.mode': 'studied' }, { 'optional.mode': 'hard' }] }
       ]
     }
   });
