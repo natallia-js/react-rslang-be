@@ -54,7 +54,7 @@ const getHardWordsStatistic = async userId => {
   return await UserWord.aggregate([...matches, lookup, ...pipeline, group]);
 };
 
-const getStudiesWordsStatistic = async userId => {
+const getStudiedWordsStatistic = async userId => {
   const matches = [];
   matches.push({
     $match: {
@@ -71,5 +71,5 @@ const getStudiesWordsStatistic = async userId => {
 module.exports = {
   getDeletedWordsStatistic,
   getHardWordsStatistic,
-  getStudiesWordsStatistic
+  getStudiedWordsStatistic
 };
