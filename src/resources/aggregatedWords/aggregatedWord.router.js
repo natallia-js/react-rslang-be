@@ -42,6 +42,18 @@ router.get('/fromPage', async (req, res) => {
   res.status(OK).send(words);
 });
 
+router.get('/studiedFromPage', async (req, res) => {
+  const page = extractQueryParam(req.query.page, 0);
+  const group = extractQueryParam(req.query.group);
+
+  const words = await aggregatedWordsService.getStudiedFromDefinitePage(
+    req.userId,
+    group,
+    page
+  );
+  res.status(OK).send(words);
+});
+
 router.get('/:wordId', validator(wordId, 'params'), async (req, res) => {
   const word = await aggregatedWordsService.get(req.params.wordId, req.userId);
 

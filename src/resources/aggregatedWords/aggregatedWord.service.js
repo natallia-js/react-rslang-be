@@ -6,10 +6,14 @@ const getAll = async (userId, group, page, perPage, filter) =>
 const getAllFromDefinitePage = async (userId, group, page) =>
   wordRepo.getAllFromDefinitePage(userId, group, page);
 
+const getStudiedFromDefinitePage = async (userId, group, page) =>
+  wordRepo.getStudiedFromDefinitePage(userId, group, page);
+
 const get = async (wordId, userId) => wordRepo.get(wordId, userId);
 
 module.exports = {
   getAll,
   getAllFromDefinitePage,
+  getStudiedFromDefinitePage,
   get
 };

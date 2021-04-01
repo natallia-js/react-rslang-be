@@ -86,7 +86,34 @@ const getAllFromDefinitePage = async (userId, group, page) => {
   if ((group || group === 0) && (page || page === 0)) {
     matches.push({
       $match: {
-        $and: [{ group, page }]
+        $and: [{ group }, { page }]
+      }
+    });
+  }
+
+  return await Word.aggregate([lookup, ...pipeline, ...matches]);
+};
+
+const getStudiedFromDefinitePage = async (userId, group, page) => {
+  lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
+    userId
+  );
+
+  const matches = [];
+
+  if ((group || group === 0) && (page || page === 0)) {
+    matches.push({
+      $match: {
+        $and: [
+          { group },
+          { page },
+          {
+            $or: [
+              { 'userWord.optional.mode': 'studied' },
+              { 'userWord.optional.mode': 'hard' }
+            ]
+          }
+        ]
       }
     });
   }
@@ -116,5 +143,6 @@ const get = async (wordId, userId) => {
 module.exports = {
   getAll,
   getAllFromDefinitePage,
+  getStudiedFromDefinitePage,
   get
 };
