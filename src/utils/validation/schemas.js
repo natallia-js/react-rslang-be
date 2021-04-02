@@ -57,6 +57,33 @@ const schemas = {
       difficulty: Joi.string().max(50),
       optional: optionalScheme
     }),
+  wordStatisticParams: Joi.object({
+    id: Joi.objectId(),
+    wordStatisticId: Joi.objectId()
+  }),
+  wordStatisticBody: Joi.object()
+    .options({ abortEarly: false, allowUnknown: false })
+    .keys({
+      wordId: Joi.objectId().required(),
+      gameId: Joi.objectId().required(),
+      group: Joi.number()
+        .integer()
+        .min(0)
+        .max(5),
+      page: Joi.number()
+        .integer()
+        .min(0)
+        .max(29),
+      correctAnswerTotal: Joi.number()
+        .integer()
+        .min(0),
+      wrongAnswerTotal: Joi.number()
+        .integer()
+        .min(0),
+      studiedAt: Joi.string()
+        .min(10)
+        .max(10)
+    }),
   statistics: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({

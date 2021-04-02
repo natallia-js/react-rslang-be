@@ -9,6 +9,23 @@ servers:
 
 components:
   schemas:
+    WordStatistic:
+      type: object
+      properties:
+        wordId:
+          type: string
+        gameId:
+          type: string
+        group:
+          type: number
+        page:
+          type: number
+        correctAnswerTotal:
+          type: number
+        wrongAnswerTotal:
+          type: number
+        studiedAt:
+          type: string
     Game:
       type: object
       properties:
@@ -134,6 +151,131 @@ security:
   - bearerAuth: []
 
 paths:
+  /users/{id}/statistic/words:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users/Statistic
+      summary: Get user word learning statistics
+      description: Get user word learning statistics
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WordStatistic"
+        402:
+          $ref: '#/components/responses/UnauthorizedError'
+
+    post:
+      tags:
+        - Users/Statistic
+      summary: Add a user word learning statistic
+      description: Add a user word learning statistic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                wordId:
+                  type: string
+                gameId:
+                  type: string
+                group:
+                  type: number
+                page:
+                  type: number
+                correctAnswerTotal:
+                  type: number
+                wrongAnswerTotal:
+                  type: number
+                studiedAt:
+                  type: string
+      responses:
+        200:
+          description: The word statistic has been created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WordStatistic"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/statistic/words/{wordStatisticId}:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: wordStatisticId
+        description: wordStatisticId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      tags:
+        - Users/Statistic
+      summary: Delete a user word learning statistic
+      description: Deletes a user word learning statistic by id
+      responses:
+        204:
+          description: The word statistic has been deleted
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    put:
+      tags:
+        - Users/Statistic
+      summary: Update a user word learning statistic
+      description: Updates a user word learning statistic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                wordId:
+                  type: string
+                gameId:
+                  type: string
+                group:
+                  type: number
+                page:
+                  type: number
+                correctAnswerTotal:
+                  type: number
+                wrongAnswerTotal:
+                  type: number
+                studiedAt:
+                  type: string
+      responses:
+        200:
+          description: The word statistic has been updated.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/WordStatistic"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
   /games:
     get:
       tags:
