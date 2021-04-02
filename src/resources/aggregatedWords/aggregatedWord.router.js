@@ -6,6 +6,7 @@ const { validator } = require('../../utils/validation/validator');
 const aggregatedWordsService = require('./aggregatedWord.service');
 const { BAD_REQUEST_ERROR } = require('../../errors/appErrors');
 const extractQueryParam = require('../../utils/getQueryNumberParameter');
+const { toResponse } = require('../../utils/toResponse');
 
 router.get('/', async (req, res) => {
   const perPage = extractQueryParam(req.query.wordsPerPage, 10);
@@ -27,7 +28,7 @@ router.get('/', async (req, res) => {
     perPage,
     filter
   );
-  res.status(OK).send(words);
+  res.status(OK).send(words.map(w => toResponse.call(w)));
 });
 
 router.get('/fromPage', async (req, res) => {
@@ -39,7 +40,7 @@ router.get('/fromPage', async (req, res) => {
     group,
     page
   );
-  res.status(OK).send(words);
+  res.status(OK).send(words.map(w => toResponse.call(w)));
 });
 
 router.get('/studiedFromPage', async (req, res) => {
@@ -57,7 +58,7 @@ router.get('/studiedFromPage', async (req, res) => {
 router.get('/:wordId', validator(wordId, 'params'), async (req, res) => {
   const word = await aggregatedWordsService.get(req.params.wordId, req.userId);
 
-  res.status(OK).send(word);
+  res.status(OK).send(toResponse.call(word));
 });
 
 module.exports = router;
