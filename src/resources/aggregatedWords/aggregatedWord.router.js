@@ -52,7 +52,7 @@ router.get('/studiedFromPage', async (req, res) => {
     group,
     page
   );
-  res.status(OK).send(words);
+  res.status(OK).send(words.map(w => toResponse.call(w)));
 });
 
 router.get('/:wordId', validator(wordId, 'params'), async (req, res) => {
