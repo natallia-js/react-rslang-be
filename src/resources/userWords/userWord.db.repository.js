@@ -56,7 +56,7 @@ const getDeletedAmount = async userId => {
 
 const save = async (wordId, userId, userWord) => {
   try {
-    return await UserWord.create(userWord);
+    return UserWord.create(userWord);
   } catch (err) {
     if (err.code === MONGO_ENTITY_EXISTS_ERROR_CODE) {
       throw new ENTITY_EXISTS(`such ${ENTITY_NAME} already exists`);

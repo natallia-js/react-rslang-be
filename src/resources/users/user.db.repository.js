@@ -39,7 +39,7 @@ const get = async id => {
 
 const save = async user => {
   try {
-    return await User.create(user);
+    return User.create(user);
   } catch (err) {
     if (err.code === MONGO_ENTITY_EXISTS_ERROR_CODE) {
       throw new ENTITY_EXISTS(`${ENTITY_NAME} with this e-mail exists`);

@@ -37,7 +37,7 @@ const getDeletedWordsStatistic = async userId => {
     }
   });
 
-  return await UserWord.aggregate([...matches, lookup, ...pipeline, group]);
+  return UserWord.aggregate([...matches, lookup, ...pipeline, group]).exec();
 };
 
 const getHardWordsStatistic = async userId => {
@@ -51,7 +51,7 @@ const getHardWordsStatistic = async userId => {
     }
   });
 
-  return await UserWord.aggregate([...matches, lookup, ...pipeline, group]);
+  return UserWord.aggregate([...matches, lookup, ...pipeline, group]);
 };
 
 const getStudiedWordsStatistic = async userId => {
@@ -65,7 +65,7 @@ const getStudiedWordsStatistic = async userId => {
     }
   });
 
-  return await UserWord.aggregate([...matches, lookup, ...pipeline, group]);
+  return UserWord.aggregate([...matches, lookup, ...pipeline, group]);
 };
 
 module.exports = {
