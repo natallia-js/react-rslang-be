@@ -6,9 +6,9 @@ const { Schema } = mongoose;
 
 const UserWordsSchema = new Schema(
   {
-    wordId: { type: Schema.Types.ObjectId, required: true },
-    userId: { type: Schema.Types.ObjectId, required: true },
-    difficulty: { type: String, required: false },
+    wordId: { type: Schema.Types.ObjectId, ref: 'Words', required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'users', required: true },
+    difficulty: { type: String, required: false, maxlength: 50 },
     optional: {
       type: Object,
       required: false
