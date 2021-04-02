@@ -59,6 +59,8 @@ components:
     UserWord:
       type: object
       properties:
+        wordId:
+          type: string
         isDeleted:
           type: boolean
         isDifficult:
@@ -67,6 +69,8 @@ components:
           type: number
         page:
           type: number
+        addedAt:
+          type: string
         difficulty:
           type: string
         optional:

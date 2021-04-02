@@ -39,7 +39,6 @@ const schemas = {
   userWord: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
-      difficulty: Joi.string().max(50),
       isDeleted: Joi.boolean(),
       isDifficult: Joi.boolean(),
       group: Joi.number()
@@ -52,6 +51,10 @@ const schemas = {
         .min(0)
         .max(29)
         .required(),
+      addedAt: Joi.string()
+        .min(10)
+        .max(10),
+      difficulty: Joi.string().max(50),
       optional: optionalScheme
     }),
   statistics: Joi.object()
