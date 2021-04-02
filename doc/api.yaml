@@ -52,6 +52,14 @@ components:
     UserWord:
       type: object
       properties:
+        isDeleted:
+          type: boolean
+        isDifficult:
+          type: boolean
+        group:
+          type: number
+        page:
+          type: number
         difficulty:
           type: string
         optional:

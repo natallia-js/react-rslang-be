@@ -40,6 +40,18 @@ const schemas = {
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
       difficulty: Joi.string().max(50),
+      isDeleted: Joi.boolean(),
+      isDifficult: Joi.boolean(),
+      group: Joi.number()
+        .integer()
+        .min(0)
+        .max(5)
+        .required(),
+      page: Joi.number()
+        .integer()
+        .min(0)
+        .max(29)
+        .required(),
       optional: optionalScheme
     }),
   statistics: Joi.object()

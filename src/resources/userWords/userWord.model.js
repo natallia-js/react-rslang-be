@@ -12,7 +12,19 @@ const UserWordsSchema = new Schema(
     optional: {
       type: Object,
       required: false
-    }
+    },
+    isDeleted: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    isDifficult: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    group: { type: Number, required: true, min: 0, max: 5 },
+    page: { type: Number, required: true, min: 0, max: 29 }
   },
   { collection: 'userWords' }
 );
