@@ -71,7 +71,21 @@ const schemas = {
         .min(1)
         .max(1000),
       optional: optionalScheme
-    })
+    }),
+  gameSchema: Joi.object()
+    .options({ abortEarly: false, allowUnknown: true })
+    .keys({
+      name: Joi.string()
+        .max(200)
+        .required(),
+      num: Joi.number()
+        .integer()
+        .min(0)
+        .required()
+    }),
+  gameNum: Joi.number()
+    .integer()
+    .min(0)
 };
 
 function optionalValidator(value, helpers) {

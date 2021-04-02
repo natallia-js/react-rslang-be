@@ -11,6 +11,7 @@ require('express-async-errors');
 const { NOT_FOUND } = require('http-status-codes');
 
 const winston = require('./common/logging');
+const gameRouter = require('./resources/games/game.router');
 const wordRouter = require('./resources/words/word.router');
 const signinRouter = require('./resources/authentication/signin.router');
 const userRouter = require('./resources/users/user.router');
@@ -59,6 +60,8 @@ app.use('/words', wordRouter);
 app.use('/signin', signinRouter);
 
 app.use('/users', userRouter);
+
+app.use('/games', gameRouter);
 
 userRouter.use('/:id/tokens', userIdValidator, userTokenRouter);
 

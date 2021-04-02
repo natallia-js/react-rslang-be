@@ -10,6 +10,7 @@ const DOC_PATH_REGEX = /^\/doc\/?$/;
 const DOC_PATH_RESOURCES_REGEX = /^\/doc\/.+$/;
 const WORDS_PATH_REGEX = /^\/words.*$/;
 const USERS_PATH = '/users';
+const GAMES_PATH = '/games';
 
 function isOpenPath(path) {
   return (
@@ -21,7 +22,7 @@ function isOpenPath(path) {
 }
 
 const checkAuthentication = (req, res, next) => {
-  if (isOpenPath(req.path)) {
+  if (isOpenPath(req.path) || req.path === GAMES_PATH) {
     return next();
   }
 

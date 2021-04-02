@@ -9,6 +9,13 @@ servers:
 
 components:
   schemas:
+    Game:
+      type: object
+      properties:
+        name:
+          type: string
+        num:
+          type: number
     DeletedWordsAmount:
       type: object
       properties:
@@ -123,6 +130,109 @@ security:
   - bearerAuth: []
 
 paths:
+  /games:
+    get:
+      tags:
+        - Games
+      security:
+        [ ]
+      summary: Get games
+      description: Gets games
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Game"
+    post:
+      tags:
+        - Games
+      security:
+        [ ]
+      summary: Add game
+      description: Add a new game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                name:
+                  type: string
+                  description: The game name
+                num:
+                  type: number
+                  description: The unique game number
+      responses:
+        200:
+          description: Successful creation
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Game"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /games/{gameNum}:
+    parameters:
+      - name: gameNum
+        description: unique game number
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Games
+      security:
+        [ ]
+      summary: Get a game with assets by num
+      description: Gets a genre with assets by num
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Game"
+        404:
+          description: Game not found
+    put:
+      tags:
+        - Games
+      security:
+        [ ]
+      summary: Upsert game
+      description: Upsert game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                name:
+                  type: string
+                  description: The game name
+                num:
+                  type: number
+                  description: The unique game number
+      responses:
+        200:
+          description: The game has been updated
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Game"
+        400:
+          description: Bad request
   /words:
     parameters:
       - name: group
