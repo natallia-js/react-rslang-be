@@ -103,15 +103,6 @@ components:
           type: object
           items:
             type: any
-    Statistic:
-      type: object
-      properties:
-        learnedWords:
-          type: number
-        optional:
-          type: object
-          items:
-            type: any
     Setting:
       type: object
       properties:
@@ -898,61 +889,6 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         404:
           description: User's word not found
-  /users/{id}/statistics:
-    parameters:
-      - name: id
-        description: userId
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      tags:
-        - Users/Statistic
-      summary: Get statistics
-      description: Gets statistics
-      responses:
-        200:
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                  $ref: "#/components/schemas/Statistic"
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
-        404:
-          description: Statistics not found
-    put:
-      tags:
-        - Users/Statistic
-      summary: Upsert statistics
-      description: Upserts new statistics
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              title: example
-              properties:
-                learnedWords:
-                  type: number
-                  description: The number of the total learned words
-                optional:
-                  type: object
-                  items:
-                    type: any
-      responses:
-        200:
-          description: The statistics has been created.
-          content:
-            application/json:
-              schema:
-                  $ref: "#/components/schemas/Statistic"
-        400:
-          description: Bad request
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/settings:
     parameters:
       - name: id

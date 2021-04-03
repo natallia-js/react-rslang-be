@@ -20,7 +20,6 @@ const userRouter = require('./resources/users/user.router');
 const userTokenRouter = require('./resources/token/token.router');
 const userWordsRouter = require('./resources/userWords/userWord.router');
 const aggregatedWordsRouter = require('./resources/aggregatedWords/aggregatedWord.router');
-const statisticRouter = require('./resources/statistics/statistic.router');
 const settingRouter = require('./resources/settings/setting.router');
 const userWordsStatRouter = require('./resources/userWordsStat/userWord.router');
 const errorHandler = require('./errors/errorHandler');
@@ -74,8 +73,6 @@ userRouter.use('/:id/aggregatedWords', userIdValidator, aggregatedWordsRouter);
 userRouter.use('/:id/statistic/games', userIdValidator, gameStatisticRouter);
 
 userRouter.use('/:id/statistic/words', userIdValidator, wordStatisticRouter);
-
-userRouter.use('/:id/statistics', userIdValidator, statisticRouter);
 
 userRouter.use('/:id/settings', userIdValidator, settingRouter);
 

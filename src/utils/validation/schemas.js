@@ -101,15 +101,6 @@ const schemas = {
         .min(10)
         .max(10)
     }),
-  statistics: Joi.object()
-    .options({ abortEarly: false, allowUnknown: false })
-    .keys({
-      learnedWords: Joi.number()
-        .integer()
-        .min(0)
-        .max(100000),
-      optional: optionalScheme
-    }),
   settings: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
