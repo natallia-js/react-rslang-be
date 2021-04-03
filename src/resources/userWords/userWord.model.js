@@ -11,12 +11,12 @@ const UserWordsSchema = new Schema(
     isDeleted: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     isDifficult: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     group: { type: Number, required: true, min: 0, max: 5 },
     page: { type: Number, required: true, min: 0, max: 29 },
@@ -24,8 +24,8 @@ const UserWordsSchema = new Schema(
     difficulty: { type: String, required: false, maxlength: 50 },
     optional: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   { collection: 'userWords' }
 );

@@ -1,5 +1,7 @@
 const wordRepo = require('./aggregatedWord.db.repository');
 
+const get = async (wordId, userId) => wordRepo.get(wordId, userId);
+
 const getAll = async (userId, group, page, perPage, filter) =>
   wordRepo.getAll(userId, group, page, perPage, filter);
 
@@ -9,11 +11,9 @@ const getAllFromDefinitePage = async (userId, group, page) =>
 const getStudiedFromDefinitePage = async (userId, group, page) =>
   wordRepo.getStudiedFromDefinitePage(userId, group, page);
 
-const get = async (wordId, userId) => wordRepo.get(wordId, userId);
-
 module.exports = {
+  get,
   getAll,
   getAllFromDefinitePage,
   getStudiedFromDefinitePage,
-  get
 };

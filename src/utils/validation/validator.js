@@ -1,16 +1,12 @@
-const {
-  BAD_REQUEST,
-  UNPROCESSABLE_ENTITY,
-  FORBIDDEN
-} = require('http-status-codes');
+const { BAD_REQUEST, FORBIDDEN, UNPROCESSABLE_ENTITY } = require('http-status-codes');
 
-const errorResponse = errors => {
+const errorResponse = (errors) => {
   return {
     status: 'failed',
-    errors: errors.map(err => {
+    errors: errors.map((err) => {
       const { path, message } = err;
       return { path, message };
-    })
+    }),
   };
 };
 
@@ -35,4 +31,4 @@ const userIdValidator = (req, res, next) => {
   }
 };
 
-module.exports = { validator, userIdValidator };
+module.exports = { userIdValidator, validator };

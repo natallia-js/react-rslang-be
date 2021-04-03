@@ -1,31 +1,31 @@
+// eslint-disable-next-line max-classes-per-file
 const {
-  NOT_FOUND,
-  EXPECTATION_FAILED,
-  UNAUTHORIZED,
-  FORBIDDEN,
   BAD_REQUEST,
-  getStatusText
+  EXPECTATION_FAILED,
+  FORBIDDEN,
+  NOT_FOUND,
+  UNAUTHORIZED,
+  getStatusText,
 } = require('http-status-codes');
 
 class AppError extends Error {
+  // eslint-disable-next-line no-useless-constructor
   constructor(message) {
     super(message);
   }
 }
 
-class NotFoundPhotoError extends AppError {
-  constructor(entity, message) {
-    super(message || `Couldn't find ${entity}' photo`);
-    this.status = NOT_FOUND;
+class AuthenticationError extends AppError {
+  constructor(message) {
+    super(message || getStatusText(FORBIDDEN));
+    this.status = FORBIDDEN;
   }
 }
 
-class NotFoundError extends AppError {
-  constructor(entity, params, message) {
-    super(
-      message || `Couldn't find a(an) ${entity} with: ${JSON.stringify(params)}`
-    );
-    this.status = NOT_FOUND;
+class AuthorizationError extends AppError {
+  constructor(message) {
+    super(message || getStatusText(UNAUTHORIZED));
+    this.status = UNAUTHORIZED;
   }
 }
 
@@ -43,25 +43,25 @@ class EntityExistsError extends AppError {
   }
 }
 
-class AuthorizationError extends AppError {
-  constructor(message) {
-    super(message || getStatusText(UNAUTHORIZED));
-    this.status = UNAUTHORIZED;
+class NotFoundError extends AppError {
+  constructor(entity, params, message) {
+    super(message || `Couldn't find a(an) ${entity} with: ${JSON.stringify(params)}`);
+    this.status = NOT_FOUND;
   }
 }
 
-class AuthenticationError extends AppError {
-  constructor(message) {
-    super(message || getStatusText(FORBIDDEN));
-    this.status = FORBIDDEN;
+class NotFoundPhotoError extends AppError {
+  constructor(entity, message) {
+    super(message || `Couldn't find ${entity}' photo`);
+    this.status = NOT_FOUND;
   }
 }
 
 module.exports = {
-  NOT_FOUND_PHOTO_ERROR: NotFoundPhotoError,
-  NOT_FOUND_ERROR: NotFoundError,
-  BAD_REQUEST_ERROR: BadRequestError,
-  AUTHORIZATION_ERROR: AuthorizationError,
   AUTHENTICATION_ERROR: AuthenticationError,
-  ENTITY_EXISTS: EntityExistsError
+  AUTHORIZATION_ERROR: AuthorizationError,
+  BAD_REQUEST_ERROR: BadRequestError,
+  ENTITY_EXISTS: EntityExistsError,
+  NOT_FOUND_ERROR: NotFoundError,
+  NOT_FOUND_PHOTO_ERROR: NotFoundPhotoError,
 };

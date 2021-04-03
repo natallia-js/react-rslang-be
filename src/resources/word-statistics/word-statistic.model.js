@@ -13,7 +13,7 @@ const WordStatistic = new Schema(
     page: { type: Number, required: true, min: 0, max: 29 },
     correctAnswerTotal: { type: Number, required: true, min: 0, default: 0 },
     wrongAnswerTotal: { type: Number, required: true, min: 0, default: 0 },
-    studiedAt: { type: Schema.Types.Date, required: true }
+    studiedAt: { type: Schema.Types.Date, required: true },
   },
   { collection: 'wordStatistic' }
 );

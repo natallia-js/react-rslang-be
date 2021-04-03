@@ -7,8 +7,27 @@ const {
   JWT_SECRET_KEY,
   JWT_EXPIRE_TIME,
   JWT_REFRESH_SECRET_KEY,
-  JWT_REFRESH_EXPIRE_TIME
+  JWT_REFRESH_EXPIRE_TIME,
 } = require('../../common/config');
+
+const getTokens = async (userId) => {
+  const token = jwt.sign({ id: userId }, JWT_SECRET_KEY, {
+    expiresIn: JWT_EXPIRE_TIME,
+  });
+
+  const tokenId = uuid.v4();
+  const refreshToken = jwt.sign({ id: userId, tokenId }, JWT_REFRESH_SECRET_KEY, {
+    expiresIn: JWT_REFRESH_EXPIRE_TIME,
+  });
+
+  await tokenRepo.upsert({
+    userId,
+    tokenId,
+    expire: Date.now() + JWT_REFRESH_EXPIRE_TIME * 1000,
+  });
+
+  return { token, refreshToken };
+};
 
 const refresh = async (userId, tokenId) => {
   const token = await tokenRepo.get(userId, tokenId);
@@ -19,29 +38,6 @@ const refresh = async (userId, tokenId) => {
   return getTokens(userId);
 };
 
-const getTokens = async userId => {
-  const token = jwt.sign({ id: userId }, JWT_SECRET_KEY, {
-    expiresIn: JWT_EXPIRE_TIME
-  });
+const upsert = (token) => tokenRepo.upsert(token);
 
-  const tokenId = uuid.v4();
-  const refreshToken = jwt.sign(
-    { id: userId, tokenId },
-    JWT_REFRESH_SECRET_KEY,
-    {
-      expiresIn: JWT_REFRESH_EXPIRE_TIME
-    }
-  );
-
-  await tokenRepo.upsert({
-    userId,
-    tokenId,
-    expire: Date.now() + JWT_REFRESH_EXPIRE_TIME * 1000
-  });
-
-  return { token, refreshToken };
-};
-
-const upsert = token => tokenRepo.upsert(token);
-
-module.exports = { refresh, getTokens, upsert };
+module.exports = { getTokens, refresh, upsert };

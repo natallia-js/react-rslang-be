@@ -1,15 +1,15 @@
-const { OK } = require('http-status-codes');
 const router = require('express').Router();
+const { OK } = require('http-status-codes');
 
+const extractQueryParam = require('../../utils/getQueryNumberParameter');
 const wordService = require('./word.service');
 const { BAD_REQUEST_ERROR } = require('../../errors/appErrors');
-const extractQueryParam = require('../../utils/getQueryNumberParameter');
 
 router.route('/').get(async (req, res) => {
   const page = extractQueryParam(req.query.page, 0);
   const group = extractQueryParam(req.query.group, 0);
 
-  if (isNaN(page) || isNaN(group)) {
+  if (Number.isNaN(page) || Number.isNaN(group)) {
     throw new BAD_REQUEST_ERROR(
       'Wrong query parameters: the group, page numbers should be valid integers'
     );
@@ -17,9 +17,9 @@ router.route('/').get(async (req, res) => {
 
   const words = await wordService.getAll({
     page,
-    group
+    group,
   });
-  res.status(OK).send(words.map(word => word.toResponse()));
+  res.status(OK).send(words.map((word) => word.toResponse()));
 });
 
 router.route('/:id').get(async (req, res) => {

@@ -1,19 +1,23 @@
-const { OK } = require('http-status-codes');
 const router = require('express').Router({ mergeParams: true });
+const { OK } = require('http-status-codes');
 
-const { wordId } = require('../../utils/validation/schemas');
-const { validator } = require('../../utils/validation/validator');
 const aggregatedWordsService = require('./aggregatedWord.service');
-const { BAD_REQUEST_ERROR } = require('../../errors/appErrors');
 const extractQueryParam = require('../../utils/getQueryNumberParameter');
+const { BAD_REQUEST_ERROR } = require('../../errors/appErrors');
 const { toResponse } = require('../../utils/toResponse');
+const { validator } = require('../../utils/validation/validator');
+const { wordId } = require('../../utils/validation/schemas');
 
 router.get('/', async (req, res) => {
-  const perPage = extractQueryParam(req.query.wordsPerPage, 10);
-  const page = extractQueryParam(req.query.page, 0);
   const group = extractQueryParam(req.query.group);
+  const page = extractQueryParam(req.query.page, 0);
+  const perPage = extractQueryParam(req.query.wordsPerPage, 10);
 
-  if ((req.query.group && isNaN(group)) || isNaN(page) || isNaN(perPage)) {
+  if (
+    (req.query.group && Number.isNaN(group)) ||
+    Number.isNaN(page) ||
+    Number.isNaN(perPage)
+  ) {
     throw new BAD_REQUEST_ERROR(
       'Wrong query parameters: the group, page and words-per-page numbers should be valid integers'
     );
@@ -28,7 +32,7 @@ router.get('/', async (req, res) => {
     perPage,
     filter
   );
-  res.status(OK).send(words.map(w => toResponse.call(w)));
+  res.status(OK).send(words.map((w) => toResponse.call(w)));
 });
 
 router.get('/fromPage', async (req, res) => {
@@ -40,7 +44,7 @@ router.get('/fromPage', async (req, res) => {
     group,
     page
   );
-  res.status(OK).send(words.map(w => toResponse.call(w)));
+  res.status(OK).send(words.map((w) => toResponse.call(w)));
 });
 
 router.get('/studiedFromPage', async (req, res) => {
@@ -52,7 +56,7 @@ router.get('/studiedFromPage', async (req, res) => {
     group,
     page
   );
-  res.status(OK).send(words.map(w => toResponse.call(w)));
+  res.status(OK).send(words.map((w) => toResponse.call(w)));
 });
 
 router.get('/:wordId', validator(wordId, 'params'), async (req, res) => {

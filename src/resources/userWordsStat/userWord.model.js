@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
 const { addMethods } = require('../../utils/toResponse');
+
+const { Schema } = mongoose;
 
 const UserWordsSchema = new Schema(
   {
@@ -9,8 +11,8 @@ const UserWordsSchema = new Schema(
     difficulty: { type: String, required: false },
     optional: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   { collection: 'userWords' }
 );

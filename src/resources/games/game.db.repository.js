@@ -6,7 +6,7 @@ const MONGO_ENTITY_EXISTS_ERROR_CODE = 11000;
 
 const getAll = async () => Game.find().exec();
 
-const getByNum = async num => {
+const getByNum = async (num) => {
   const game = await Game.find({ num }).exec();
   if (!game) {
     throw new NOT_FOUND_ERROR(ENTITY_NAME, { num });
@@ -15,7 +15,7 @@ const getByNum = async num => {
   return game;
 };
 
-const save = async game => {
+const save = async (game) => {
   let gameEntity;
   try {
     gameEntity = await Game.create(game);
@@ -30,10 +30,6 @@ const save = async game => {
 };
 
 const upsertByNum = async (num, game) =>
-  Game.findOneAndUpdate(
-    { num },
-    { $set: game },
-    { upsert: true, new: true }
-  ).exec();
+  Game.findOneAndUpdate({ num }, { $set: game }, { upsert: true, new: true }).exec();
 
 module.exports = { getAll, getByNum, save, upsertByNum };

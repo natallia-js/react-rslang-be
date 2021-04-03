@@ -1,13 +1,14 @@
+const mongoose = require('mongoose');
+
 const UserWord = require('./userWord.model');
 const { NOT_FOUND_ERROR, ENTITY_EXISTS } = require('../../errors/appErrors');
-const mongoose = require('mongoose');
 
 const ENTITY_NAME = 'user word';
 const MONGO_ENTITY_EXISTS_ERROR_CODE = 11000;
 
 const { ObjectId } = mongoose.Types;
 
-const getAll = async userId => UserWord.find({ userId });
+const getAll = async (userId) => UserWord.find({ userId });
 
 const get = async (wordId, userId) => {
   const userWord = await UserWord.findOne({ wordId, userId });
@@ -18,12 +19,12 @@ const get = async (wordId, userId) => {
   return userWord;
 };
 
-const getDeletedAmount = async userId => {
+const getDeletedAmount = async (userId) => {
   const matches = [];
   matches.push({
     $match: {
-      $and: [{ userId: ObjectId(userId) }, { 'optional.deleted': true }]
-    }
+      $and: [{ userId: ObjectId(userId) }, { 'optional.deleted': true }],
+    },
   });
 
   const lookup = {
@@ -31,24 +32,24 @@ const getDeletedAmount = async userId => {
       from: 'words',
       localField: 'wordId',
       foreignField: '_id',
-      as: 'userDeletedWord'
-    }
+      as: 'userDeletedWord',
+    },
   };
 
   const pipeline = [
     {
       $unwind: {
         path: '$userDeletedWord',
-        preserveNullAndEmptyArrays: true
-      }
-    }
+        preserveNullAndEmptyArrays: true,
+      },
+    },
   ];
 
   const group = {
     $group: {
       _id: { group: '$userDeletedWord.group', page: '$userDeletedWord.page' },
-      count: { $sum: 1 }
-    }
+      count: { $sum: 1 },
+    },
   };
 
   return UserWord.aggregate([...matches, lookup, ...pipeline, group]);
@@ -87,5 +88,5 @@ module.exports = {
   getDeletedAmount,
   remove,
   save,
-  update
+  update,
 };

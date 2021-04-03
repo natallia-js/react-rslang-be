@@ -1,15 +1,12 @@
 const jwt = require('jsonwebtoken');
-const {
-  JWT_SECRET_KEY,
-  JWT_REFRESH_SECRET_KEY
-} = require('../../common/config');
 const { AUTHORIZATION_ERROR } = require('../../errors/appErrors');
+const { JWT_SECRET_KEY, JWT_REFRESH_SECRET_KEY } = require('../../common/config');
 
 const ALLOWED_PATHS = ['/signin', '/signup', '/games'];
 const DOC_PATH_REGEX = /^\/doc\/?$/;
 const DOC_PATH_RESOURCES_REGEX = /^\/doc\/.+$/;
-const WORDS_PATH_REGEX = /^\/words.*$/;
 const USERS_PATH = '/users';
+const WORDS_PATH_REGEX = /^\/words.*$/;
 
 function isOpenPath(path) {
   return (
@@ -36,9 +33,7 @@ const checkAuthentication = (req, res, next) => {
 
   try {
     const token = rawToken.slice(7, rawToken.length);
-    const secret = req.path.includes('tokens')
-      ? JWT_REFRESH_SECRET_KEY
-      : JWT_SECRET_KEY;
+    const secret = req.path.includes('tokens') ? JWT_REFRESH_SECRET_KEY : JWT_SECRET_KEY;
     const { id, tokenId } = jwt.verify(token, secret);
     req.userId = id;
     req.tokenId = tokenId;

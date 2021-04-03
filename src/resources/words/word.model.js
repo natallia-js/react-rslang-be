@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
 const { addMethods } = require('../../utils/toResponse');
+
+const { Schema } = mongoose;
 
 const WordsSchema = new Schema(
   {
@@ -16,7 +18,7 @@ const WordsSchema = new Schema(
     transcription: { type: String, required: false, max: 100 },
     wordTranslate: String,
     textMeaningTranslate: String,
-    textExampleTranslate: String
+    textExampleTranslate: String,
   },
   { collection: 'words' }
 );

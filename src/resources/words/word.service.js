@@ -1,11 +1,7 @@
 const wordRepo = require('./word.db.repository');
 
-const getAll = async conditions => wordRepo.getAll(conditions);
+const get = async (wordId) => wordRepo.get(wordId);
 
-const get = async wordId => {
-  const word = await wordRepo.get(wordId);
+const getAll = async (conditions) => wordRepo.getAll(conditions);
 
-  return word;
-};
-
-module.exports = { getAll, get };
+module.exports = { get, getAll };

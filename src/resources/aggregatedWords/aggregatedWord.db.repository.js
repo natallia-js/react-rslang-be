@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const Word = require('../words/word.model');
 const { NOT_FOUND_ERROR } = require('../../errors/appErrors');
+
 const ENTITY_NAME = 'user word';
 
 const lookup = {
@@ -12,35 +13,45 @@ const lookup = {
       {
         $match: {
           $expr: {
-            $and: [
-              { $eq: ['$userId', null] },
-              { $eq: ['$wordId', '$$word_id'] }
-            ]
-          }
-        }
-      }
+            $and: [{ $eq: ['$userId', null] }, { $eq: ['$wordId', '$$word_id'] }],
+          },
+        },
+      },
     ],
-    as: 'userWord'
-  }
+    as: 'userWord',
+  },
 };
 
 const pipeline = [
   {
     $unwind: {
       path: '$userWord',
-      preserveNullAndEmptyArrays: true
-    }
+      preserveNullAndEmptyArrays: true,
+    },
   },
   {
-    $unset: [
-      '__v',
-      'userWord._id',
-      'userWord.wordId',
-      'userWord.userId',
-      'userWord.__v'
-    ]
-  }
+    $unset: ['__v', 'userWord._id', 'userWord.wordId', 'userWord.userId', 'userWord.__v'],
+  },
 ];
+
+const get = async (wordId, userId) => {
+  lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
+    userId
+  );
+
+  const match = {
+    $match: {
+      _id: mongoose.Types.ObjectId(wordId),
+    },
+  };
+
+  const userWord = await Word.aggregate([match, lookup, ...pipeline]);
+  if (!userWord) {
+    throw new NOT_FOUND_ERROR(ENTITY_NAME, { wordId, userId });
+  }
+
+  return userWord;
+};
 
 const getAll = async (userId, group, page, perPage, filter) => {
   lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
@@ -51,16 +62,16 @@ const getAll = async (userId, group, page, perPage, filter) => {
   if (group || group === 0) {
     matches.push({
       $match: {
-        group
-      }
+        group,
+      },
     });
   }
 
   if (filter) {
     matches.push({
       $match: {
-        ...filter
-      }
+        ...filter,
+      },
     });
   }
   const facet = {
@@ -68,10 +79,10 @@ const getAll = async (userId, group, page, perPage, filter) => {
       paginatedResults: [{ $skip: page * perPage }, { $limit: perPage }],
       totalCount: [
         {
-          $count: 'count'
-        }
-      ]
-    }
+          $count: 'count',
+        },
+      ],
+    },
   };
   return Word.aggregate([lookup, ...pipeline, ...matches, facet]).exec();
 };
@@ -86,8 +97,8 @@ const getAllFromDefinitePage = async (userId, group, page) => {
   if ((group || group === 0) && (page || page === 0)) {
     matches.push({
       $match: {
-        $and: [{ group }, { page }]
-      }
+        $and: [{ group }, { page }],
+      },
     });
   }
 
@@ -110,39 +121,20 @@ const getStudiedFromDefinitePage = async (userId, group, page) => {
           {
             $or: [
               { 'userWord.optional.mode': 'studied' },
-              { 'userWord.optional.mode': 'hard' }
-            ]
-          }
-        ]
-      }
+              { 'userWord.optional.mode': 'hard' },
+            ],
+          },
+        ],
+      },
     });
   }
 
   return Word.aggregate([lookup, ...pipeline, ...matches]);
 };
 
-const get = async (wordId, userId) => {
-  lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
-    userId
-  );
-
-  const match = {
-    $match: {
-      _id: mongoose.Types.ObjectId(wordId)
-    }
-  };
-
-  const userWord = await Word.aggregate([match, lookup, ...pipeline]);
-  if (!userWord) {
-    throw new NOT_FOUND_ERROR(ENTITY_NAME, { wordId, userId });
-  }
-
-  return userWord;
-};
-
 module.exports = {
+  get,
   getAll,
   getAllFromDefinitePage,
   getStudiedFromDefinitePage,
-  get
 };

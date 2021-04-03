@@ -1,17 +1,17 @@
-const { OK, NO_CONTENT } = require('http-status-codes');
 const router = require('express').Router({ mergeParams: true });
+const { OK, NO_CONTENT } = require('http-status-codes');
 
-const gameStatisticService = require('./game-statistic.service');
 const {
   id,
   gameStatisticBody,
-  gameStatisticParams
+  gameStatisticParams,
 } = require('../../utils/validation/schemas');
 const { validator } = require('../../utils/validation/validator');
+const gameStatisticService = require('./game-statistic.service');
 
 router.get('/', validator(id, 'params'), async (req, res) => {
   const gameStatistics = await gameStatisticService.getByUser(req.userId);
-  res.status(OK).send(gameStatistics.map(s => s.toResponse()));
+  res.status(OK).send(gameStatistics.map((s) => s.toResponse()));
 });
 
 router.post(

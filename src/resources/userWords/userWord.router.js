@@ -7,7 +7,7 @@ const userWordService = require('./userWord.service');
 
 router.get('/', async (req, res) => {
   const userWords = await userWordService.getAll(req.userId);
-  res.status(OK).send(userWords.map(w => w.toResponse()));
+  res.status(OK).send(userWords.map((w) => w.toResponse()));
 });
 
 router.get('/amount/deleted', async (req, res) => {
@@ -25,11 +25,7 @@ router.post(
   validator(wordId, 'params'),
   validator(userWord, 'body'),
   async (req, res) => {
-    const word = await userWordService.save(
-      req.params.wordId,
-      req.userId,
-      req.body
-    );
+    const word = await userWordService.save(req.params.wordId, req.userId, req.body);
     res.status(OK).send(word.toResponse());
   }
 );
@@ -39,11 +35,7 @@ router.put(
   validator(wordId, 'params'),
   validator(userWord, 'body'),
   async (req, res) => {
-    const word = await userWordService.update(
-      req.params.wordId,
-      req.userId,
-      req.body
-    );
+    const word = await userWordService.update(req.params.wordId, req.userId, req.body);
     res.status(OK).send(word.toResponse());
   }
 );

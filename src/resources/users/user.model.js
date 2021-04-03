@@ -1,29 +1,31 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+
 const { addMethods } = require('../../utils/toResponse');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const User = new Schema(
   {
     name: {
       type: String,
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
       required: true,
       trim: true,
-      minlength: 8
+      minlength: 8,
     },
     photo: {
       data: { type: Buffer },
-      contentType: { type: String }
-    }
+      contentType: { type: String },
+    },
   },
   { collection: 'users' }
 );
@@ -35,10 +37,7 @@ User.pre('save', async function preSave(next) {
 
 User.pre('findOneAndUpdate', async function preUpdate(next) {
   if (this._update.$set.password) {
-    this._update.$set.password = await bcrypt.hash(
-      this._update.$set.password,
-      10
-    );
+    this._update.$set.password = await bcrypt.hash(this._update.$set.password, 10);
   }
 
   next();

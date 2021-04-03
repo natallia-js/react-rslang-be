@@ -1,5 +1,5 @@
-const { OK } = require('http-status-codes');
 const router = require('express').Router();
+const { OK } = require('http-status-codes');
 
 const gameService = require('./game.service');
 const { gameNum, gameSchema } = require('../../utils/validation/schemas');
@@ -7,7 +7,7 @@ const { validator } = require('../../utils/validation/validator');
 
 router.route('/').get(async (req, res) => {
   const games = await gameService.getAll();
-  res.status(OK).send(games.map(w => w.toResponse()));
+  res.status(OK).send(games.map((w) => w.toResponse()));
 });
 
 router.get('/:gameNum', validator(gameNum, 'params'), async (req, res) => {

@@ -6,7 +6,7 @@ function toResponse() {
   return { id: _id, ...rest };
 }
 
-const addMethods = schema => {
+const addMethods = (schema) => {
   // eslint-disable-next-line prettier/prettier
   schema.method('toResponse', function () {
     const { _id, ...rest } = this.toJSON();

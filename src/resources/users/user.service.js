@@ -5,7 +5,7 @@ const tokenService = require('../token/token.service');
 const settingsService = require('../settings/setting.service');
 const { AUTHENTICATION_ERROR } = require('../../errors/appErrors');
 
-const authenticate = async user => {
+const authenticate = async (user) => {
   const userEntity = await usersRepo.getUserByEmail(user.email);
 
   const isValidated = await bcrypt.compare(user.password, userEntity.password);
@@ -18,21 +18,21 @@ const authenticate = async user => {
   return {
     ...tokens,
     userId: userEntity._id,
-    name: userEntity.name
+    name: userEntity.name,
   };
 };
 
-const getPhoto = id => usersRepo.getPhoto(id);
+const get = (id) => usersRepo.get(id);
 
-const get = id => usersRepo.get(id);
+const getPhoto = (id) => usersRepo.getPhoto(id);
 
-const save = user => usersRepo.save(user);
+const save = (user) => usersRepo.save(user);
 
-const update = (id, user) => usersRepo.update(id, user);
-
-const remove = async id => {
+const remove = async (id) => {
   await settingsService.remove(id);
   await usersRepo.remove(id);
 };
 
-module.exports = { authenticate, getPhoto, get, save, update, remove };
+const update = (id, user) => usersRepo.update(id, user);
+
+module.exports = { authenticate, get, getPhoto, remove, save, update };

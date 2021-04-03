@@ -6,63 +6,57 @@ const lookup = {
     from: 'words',
     localField: 'wordId',
     foreignField: '_id',
-    as: 'userWord'
-  }
+    as: 'userWord',
+  },
 };
 
 const pipeline = [
   {
     $unwind: {
       path: '$userWord',
-      preserveNullAndEmptyArrays: true
-    }
-  }
+      preserveNullAndEmptyArrays: true,
+    },
+  },
 ];
 
 const group = {
   $group: {
     _id: { group: '$userWord.group', page: '$userWord.page' },
-    count: { $sum: 1 }
-  }
+    count: { $sum: 1 },
+  },
 };
 
-const getDeletedWordsStatistic = async userId => {
+const getDeletedWordsStatistic = async (userId) => {
   const matches = [];
   matches.push({
     $match: {
-      $and: [
-        { userId: mongoose.Types.ObjectId(userId) },
-        { 'optional.deleted': true }
-      ]
-    }
+      $and: [{ userId: mongoose.Types.ObjectId(userId) }, { 'optional.deleted': true }],
+    },
   });
 
   return UserWord.aggregate([...matches, lookup, ...pipeline, group]).exec();
 };
 
-const getHardWordsStatistic = async userId => {
+const getHardWordsStatistic = async (userId) => {
   const matches = [];
   matches.push({
     $match: {
-      $and: [
-        { userId: mongoose.Types.ObjectId(userId) },
-        { 'optional.mode': 'hard' }
-      ]
-    }
+      $and: [{ userId: mongoose.Types.ObjectId(userId) }, { 'optional.mode': 'hard' }],
+    },
   });
 
   return UserWord.aggregate([...matches, lookup, ...pipeline, group]);
 };
 
-const getStudiedWordsStatistic = async userId => {
+const getStudiedWordsStatistic = async (userId) => {
   const matches = [];
   matches.push({
     $match: {
       $and: [
         { userId: mongoose.Types.ObjectId(userId) },
-        { $or: [{ 'optional.mode': 'studied' }, { 'optional.mode': 'hard' }] }
-      ]
-    }
+        { $or: [{ 'optional.mode': 'studied' }, { 'optional.mode': 'hard' }] },
+      ],
+    },
   });
 
   return UserWord.aggregate([...matches, lookup, ...pipeline, group]);
@@ -71,5 +65,5 @@ const getStudiedWordsStatistic = async userId => {
 module.exports = {
   getDeletedWordsStatistic,
   getHardWordsStatistic,
-  getStudiedWordsStatistic
+  getStudiedWordsStatistic,
 };

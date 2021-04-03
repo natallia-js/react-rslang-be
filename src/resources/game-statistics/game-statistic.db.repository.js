@@ -1,11 +1,11 @@
 const GameStatistic = require('./game-statistic.model');
 
-const getByUser = async userId => GameStatistic.find({ userId });
+const getByUser = async (userId) => GameStatistic.find({ userId });
 
-const remove = async gameStatisticId =>
+const remove = async (gameStatisticId) =>
   GameStatistic.findByIdAndDelete(gameStatisticId);
 
-const save = async gameStatistic => GameStatistic.create(gameStatistic);
+const save = async (gameStatistic) => GameStatistic.create(gameStatistic);
 
 const update = async (gameStatisticId, gameStatistic) =>
   GameStatistic.findByIdAndUpdate(

@@ -8,13 +8,13 @@ const Game = new Schema(
   {
     name: {
       type: String,
-      trim: true
+      trim: true,
     },
     num: {
       type: Number,
       required: true,
-      unique: true
-    }
+      unique: true,
+    },
   },
   { collection: 'games' }
 );

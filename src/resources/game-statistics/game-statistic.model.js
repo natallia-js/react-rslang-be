@@ -9,7 +9,7 @@ const GameStatistic = new Schema(
     userId: { type: Schema.Types.ObjectId, ref: 'users', required: true },
     gameId: { type: Schema.Types.ObjectId, ref: 'games', required: true },
     bestSeries: { type: Number, required: true, min: 0, default: 0 },
-    date: { type: Schema.Types.Date, required: true }
+    date: { type: Schema.Types.Date, required: true },
   },
   { collection: 'gameStatistic' }
 );

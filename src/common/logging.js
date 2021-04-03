@@ -1,9 +1,11 @@
 const winston = require('winston');
 const morgan = require('morgan');
-const { combine, timestamp, prettyPrint, colorize, cli } = winston.format;
+
 const { LOGS_DIR } = require('./config');
 
-morgan.token('userId', req => JSON.stringify(req.userId));
+const { combine, timestamp, prettyPrint, colorize, cli } = winston.format;
+
+morgan.token('userId', (req) => JSON.stringify(req.userId));
 
 const format = combine(timestamp(), prettyPrint());
 const options = {
@@ -15,7 +17,7 @@ const options = {
     json: true,
     maxsize: 1024 * 5000,
     maxFiles: 5,
-    colorize: false
+    colorize: false,
   },
   fileError: {
     format,
@@ -24,7 +26,7 @@ const options = {
     json: true,
     maxsize: 1024 * 5000,
     maxFiles: 5,
-    colorize: false
+    colorize: false,
   },
   fileInfo: {
     format,
@@ -34,30 +36,28 @@ const options = {
     json: true,
     maxsize: 1024 * 5000,
     maxFiles: 5,
-    colorize: false
-  }
+    colorize: false,
+  },
 };
 
 const logger = winston.createLogger({
+  exceptionHandlers: [new winston.transports.File(options.fileUnhandled)],
   transports: [
     new winston.transports.File(options.fileError),
-    new winston.transports.File(options.fileInfo)
+    new winston.transports.File(options.fileInfo),
   ],
-  exceptionHandlers: [new winston.transports.File(options.fileUnhandled)]
 });
 
-// if (process.env.NODE_ENV === 'development') {
 logger.add(
   new winston.transports.Console({
+    colorize: true,
     format: combine(colorize(), cli()),
     handleExceptions: true,
-    colorize: true
   })
 );
-// }
 
 logger.stream = {
-  write: message => logger.info(message)
+  write: (message) => logger.info(message),
 };
 
 module.exports = logger;
