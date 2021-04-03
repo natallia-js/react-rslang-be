@@ -1,10 +1,10 @@
-const Joi = require('@hapi/joi');
-Joi.objectId = require('joi-objectid')(Joi);
+const Joi = require('joi');
 const {
   MAX_OPTIONAL_PROPERTIES,
   MAX_SYMBOLS_PER_OBJECT,
   MIN_PASSWORD_LENGTH
 } = require('../../common/config');
+const JoiObjectId = require('joi-objectid')(Joi);
 
 const optionalScheme = Joi.object()
   .max(MAX_OPTIONAL_PROPERTIES)
@@ -27,8 +27,8 @@ const optionalScheme = Joi.object()
   });
 
 const schemas = {
-  id: Joi.object({ id: Joi.objectId() }),
-  wordId: Joi.object({ id: Joi.objectId(), wordId: Joi.objectId() }),
+  id: Joi.object({ id: JoiObjectId() }),
+  wordId: Joi.object({ id: JoiObjectId(), wordId: JoiObjectId() }),
   user: Joi.object()
     .options({ abortEarly: false, allowUnknown: true })
     .keys({
@@ -58,13 +58,13 @@ const schemas = {
       optional: optionalScheme
     }),
   gameStatisticParams: Joi.object({
-    id: Joi.objectId(),
-    gameStatisticId: Joi.objectId()
+    id: JoiObjectId(),
+    gameStatisticId: JoiObjectId()
   }),
   gameStatisticBody: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
-      gameId: Joi.objectId().required(),
+      gameId: JoiObjectId().required(),
       bestSeries: Joi.number()
         .integer()
         .min(0)
@@ -75,14 +75,14 @@ const schemas = {
         .required()
     }),
   wordStatisticParams: Joi.object({
-    id: Joi.objectId(),
-    wordStatisticId: Joi.objectId()
+    id: JoiObjectId(),
+    wordStatisticId: JoiObjectId()
   }),
   wordStatisticBody: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
-      wordId: Joi.objectId().required(),
-      gameId: Joi.objectId().required(),
+      wordId: JoiObjectId().required(),
+      gameId: JoiObjectId().required(),
       group: Joi.number()
         .integer()
         .min(0)
