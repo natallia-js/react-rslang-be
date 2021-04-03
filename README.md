@@ -1,4 +1,5 @@
 # LearnWords
+
 A backend part of [React RS.School task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-rslang.md)
 
 #### [Wiki проекта](https://github.com/rolling-scopes-school/-LearnWords-react/wiki)  
@@ -10,13 +11,17 @@ A backend part of [React RS.School task](https://github.com/rolling-scopes-schoo
 Сделайте форк репозитория и следуйте [инструкции по деплою и настройке приложения](https://github.com/rolling-scopes-school/-LearnWords-react/wiki).
 
 ## Локальный запуск
-1. Создайте файл ```.env``` в корне приложения
-2. В созданном файе укажите переменные окружения:  
-```
+
+1. Создайте файл `.env` в корне приложения
+2. Добавьте переменные окружения:
+
+```sh
 PORT=<порт на котором будет запущено приложение>
-MONGO_CONNECTION_STRING=<адрес вашей локальной или облачной mongodb>
-JWT_SECRET_KEY=<ваш секретный ключ для подписи JWT>
-JWT_REFRESH_SECRET_KEY=<ваш секретный ключ для подписи refresh JWT>
+MONGO_CONNECTION_STRING=<адрес локальной или облачной mongodb>
+JWT_SECRET_KEY=<секретный ключ для подписи JWT>
+JWT_REFRESH_SECRET_KEY=<секретный ключ для подписи refresh JWT>
 ```
-3. ```npm install```
-4. ```npm run start:dev```
+
+3. `npm install`
+4. `npm run start:dev`
+
