@@ -9,6 +9,15 @@ servers:
 
 components:
   schemas:
+    GameStatistic:
+      type: object
+      properties:
+        gameId:
+          type: string
+        bestSeries:
+          type: number
+        date:
+          type: string
     WordStatistic:
       type: object
       properties:
@@ -151,6 +160,115 @@ security:
   - bearerAuth: []
 
 paths:
+  /users/{id}/statistic/games:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users/Statistic
+      summary: Get user game learning statistics
+      description: Get user game learning statistics
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GameStatistic"
+        402:
+          $ref: '#/components/responses/UnauthorizedError'
+
+    post:
+      tags:
+        - Users/Statistic
+      summary: Add a user game learning statistic
+      description: Add a user game learning statistic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                gameId:
+                  type: string
+                bestSeries:
+                  type: number
+                date:
+                  type: string
+      responses:
+        200:
+          description: The game statistic has been created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameStatistic"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/statistic/games/{gameStatisticId}:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gameStatisticId
+        description: gameStatisticId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      tags:
+        - Users/Statistic
+      summary: Delete a user game learning statistic
+      description: Deletes a user game learning statistic by id
+      responses:
+        204:
+          description: The game statistic has been deleted
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    put:
+      tags:
+        - Users/Statistic
+      summary: Update a user game learning statistic
+      description: Updates a user game learning statistic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                gameId:
+                  type: string
+                bestSeries:
+                  type: number
+                date:
+                  type: string
+      responses:
+        200:
+          description: The game statistic has been updated.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/GameStatistic"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/statistic/words:
     parameters:
       - name: id

@@ -57,6 +57,23 @@ const schemas = {
       difficulty: Joi.string().max(50),
       optional: optionalScheme
     }),
+  gameStatisticParams: Joi.object({
+    id: Joi.objectId(),
+    gameStatisticId: Joi.objectId()
+  }),
+  gameStatisticBody: Joi.object()
+    .options({ abortEarly: false, allowUnknown: false })
+    .keys({
+      gameId: Joi.objectId().required(),
+      bestSeries: Joi.number()
+        .integer()
+        .min(0)
+        .required(),
+      date: Joi.string()
+        .min(10)
+        .max(10)
+        .required()
+    }),
   wordStatisticParams: Joi.object({
     id: Joi.objectId(),
     wordStatisticId: Joi.objectId()
