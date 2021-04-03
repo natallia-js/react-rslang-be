@@ -1,14 +1,6 @@
 const GameStatistic = require('./game-statistic.model');
-const { NOT_FOUND_ERROR } = require('../../errors/appErrors');
 
-const getByUser = async userId => {
-  const userGameStatistic = await GameStatistic.find({ userId });
-  if (!userGameStatistic) {
-    throw new NOT_FOUND_ERROR('userGameStatistic', `userId: ${userId}`);
-  }
-
-  return userGameStatistic;
-};
+const getByUser = async userId => GameStatistic.find({ userId });
 
 const remove = async gameStatisticId =>
   GameStatistic.findByIdAndDelete(gameStatisticId);

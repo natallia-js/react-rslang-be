@@ -10,8 +10,8 @@ const {
 const { validator } = require('../../utils/validation/validator');
 
 router.get('/', validator(id, 'params'), async (req, res) => {
-  const gameStatistic = await gameStatisticService.getByUser(req.userId);
-  res.status(OK).send(gameStatistic.toResponse());
+  const gameStatistics = await gameStatisticService.getByUser(req.userId);
+  res.status(OK).send(gameStatistics.map(s => s.toResponse()));
 });
 
 router.post(
