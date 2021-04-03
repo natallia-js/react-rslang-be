@@ -1,14 +1,6 @@
 const WordStatistic = require('./word-statistic.model');
-const { NOT_FOUND_ERROR } = require('../../errors/appErrors');
 
-const getByUser = async userId => {
-  const userWordStatistic = await WordStatistic.find({ userId });
-  if (!userWordStatistic) {
-    throw new NOT_FOUND_ERROR('userWordStatistic', `userId: ${userId}`);
-  }
-
-  return userWordStatistic;
-};
+const getByUser = async userId => WordStatistic.find({ userId });
 
 const remove = async wordStatisticId =>
   WordStatistic.findByIdAndDelete(wordStatisticId);

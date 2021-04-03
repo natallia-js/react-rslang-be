@@ -10,8 +10,8 @@ const {
 const { validator } = require('../../utils/validation/validator');
 
 router.get('/', validator(id, 'params'), async (req, res) => {
-  const wordStatistic = await wordStatisticService.getByUser(req.userId);
-  res.status(OK).send(wordStatistic.toResponse());
+  const wordStatistics = await wordStatisticService.getByUser(req.userId);
+  res.status(OK).send(wordStatistics.map(s => s.toResponse()));
 });
 
 router.post(

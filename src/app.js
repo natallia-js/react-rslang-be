@@ -11,6 +11,7 @@ require('express-async-errors');
 const { NOT_FOUND } = require('http-status-codes');
 
 const winston = require('./common/logging');
+const wordStatisticRouter = require('./resources/word-statistics/word-statistic.router');
 const gameRouter = require('./resources/games/game.router');
 const wordRouter = require('./resources/words/word.router');
 const signinRouter = require('./resources/authentication/signin.router');
@@ -68,6 +69,8 @@ userRouter.use('/:id/tokens', userIdValidator, userTokenRouter);
 userRouter.use('/:id/words', userIdValidator, userWordsRouter);
 
 userRouter.use('/:id/aggregatedWords', userIdValidator, aggregatedWordsRouter);
+
+userRouter.use('/:id/statistic/words', userIdValidator, wordStatisticRouter);
 
 userRouter.use('/:id/statistics', userIdValidator, statisticRouter);
 
