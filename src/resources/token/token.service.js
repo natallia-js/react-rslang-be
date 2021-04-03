@@ -24,7 +24,7 @@ const getTokens = async userId => {
     expiresIn: JWT_EXPIRE_TIME
   });
 
-  const tokenId = uuid();
+  const tokenId = uuid.v4();
   const refreshToken = jwt.sign(
     { id: userId, tokenId },
     JWT_REFRESH_SECRET_KEY,
