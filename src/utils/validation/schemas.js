@@ -86,6 +86,7 @@ const schemas = {
     .keys({
       name: Joi.string().max(200).required(),
       num: Joi.number().integer().min(0).required(),
+      img: Joi.string().max(50),
     }),
   gameNum: Joi.number().integer().min(0),
 };

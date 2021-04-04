@@ -15,6 +15,11 @@ const Game = new Schema(
       required: true,
       unique: true,
     },
+    img: {
+      type: String,
+      trim: true,
+      maxlength: 50,
+    },
   },
   { collection: 'games' }
 );

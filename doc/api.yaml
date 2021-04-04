@@ -42,6 +42,8 @@ components:
           type: string
         num:
           type: number
+        img:
+          type: string
     DeletedWordsAmount:
       type: object
       properties:
@@ -423,6 +425,8 @@ paths:
                 num:
                   type: number
                   description: The unique game number
+                img:
+                  type: The name of game logo (optional)
       responses:
         200:
           description: Successful creation
@@ -479,6 +483,8 @@ paths:
                 num:
                   type: number
                   description: The unique game number
+                img:
+                  type: The name of game logo (optional)
       responses:
         200:
           description: The game has been updated
