@@ -41,7 +41,11 @@ const getHardWordsStatistic = async (userId) => {
   const matches = [];
   matches.push({
     $match: {
-      $and: [{ userId: mongoose.Types.ObjectId(userId) }, { 'optional.mode': 'hard' }],
+      $and: [
+        { userId: mongoose.Types.ObjectId(userId) },
+        { 'optional.mode': 'hard' },
+        { $or: [{ 'optional.deleted': false }, { 'optional.deleted': null }] },
+      ],
     },
   });
 
