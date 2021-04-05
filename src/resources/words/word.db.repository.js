@@ -11,6 +11,8 @@ const get = async (id) => {
   return word;
 };
 
-const getAll = async ({ group, page }) => Word.find({ group, page }).exec();
+const getAll = async () => Word.find().exec();
 
-module.exports = { get, getAll };
+const getAllByPage = async ({ group, page }) => Word.find({ group, page }).exec();
+
+module.exports = { get, getAll, getAllByPage };
