@@ -106,7 +106,7 @@ components:
         optional:
           type: object
           items:
-            type: any
+            type: object
     Setting:
       type: object
       properties:
@@ -115,7 +115,7 @@ components:
         optional:
           type: object
           items:
-            type: any
+            type: object
     User:
       type: object
       properties:
@@ -126,7 +126,8 @@ components:
         password:
           type: string
         filedata:
-          type: binary
+          type: string
+          format: binary
     Auth:
       type: object
       properties:
@@ -176,7 +177,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/GameStatistic"
+                  $ref: '#/components/schemas/GameStatistic'
         402:
           $ref: '#/components/responses/UnauthorizedError'
 
@@ -205,7 +206,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GameStatistic"
+                $ref: '#/components/schemas/GameStatistic'
         400:
           description: Bad request
         401:
@@ -255,11 +256,11 @@ paths:
                   type: string
       responses:
         200:
-          description: The game statistic has been updated.
+          description: The game statistic has been updated
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/GameStatistic"
+                $ref: '#/components/schemas/GameStatistic'
         400:
           description: Bad request
         401:
@@ -285,7 +286,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/WordStatistic"
+                  $ref: '#/components/schemas/WordStatistic'
         402:
           $ref: '#/components/responses/UnauthorizedError'
 
@@ -318,11 +319,11 @@ paths:
                   type: string
       responses:
         200:
-          description: The word statistic has been created.
+          description: The word statistic has been created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WordStatistic"
+                $ref: '#/components/schemas/WordStatistic'
         400:
           description: Bad request
         401:
@@ -380,11 +381,11 @@ paths:
                   type: string
       responses:
         200:
-          description: The word statistic has been updated.
+          description: The word statistic has been updated
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/WordStatistic"
+                $ref: '#/components/schemas/WordStatistic'
         400:
           description: Bad request
         401:
@@ -393,8 +394,7 @@ paths:
     get:
       tags:
         - Games
-      security:
-        [ ]
+      security: []
       summary: Get games
       description: Gets games
       responses:
@@ -405,12 +405,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Game"
+                  $ref: '#/components/schemas/Game'
     post:
       tags:
         - Games
-      security:
-        [ ]
+      security: []
       summary: Add game
       description: Add a new game
       requestBody:
@@ -428,14 +427,15 @@ paths:
                   type: number
                   description: The unique game number
                 img:
-                  type: The name of game logo (optional)
+                  type: string
+                  description: The name of game logo (optional)
       responses:
         200:
           description: Successful creation
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/Game"
+                $ref: '#/components/schemas/Game'
         400:
           description: Bad request
         401:
@@ -451,8 +451,7 @@ paths:
     get:
       tags:
         - Games
-      security:
-        [ ]
+      security: []
       summary: Get a game with assets by num
       description: Gets a genre with assets by num
       responses:
@@ -461,16 +460,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Game"
+                $ref: '#/components/schemas/Game'
         404:
           description: Game not found
     put:
       tags:
         - Games
-      security:
-        [ ]
+      security: []
       summary: Upsert game
-      description: Upsert game
+      description: Upserts game
       requestBody:
         required: true
         content:
@@ -486,14 +484,15 @@ paths:
                   type: number
                   description: The unique game number
                 img:
-                  type: The name of game logo (optional)
+                  type: string
+                  description: The name of game logo (optional)
       responses:
         200:
           description: The game has been updated
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/Game"
+                $ref: '#/components/schemas/Game'
         400:
           description: Bad request
   /words:
@@ -513,8 +512,7 @@ paths:
     get:
       tags:
         - Words
-      security:
-        []
+      security: []
       summary: Get a chunk of words
       description: Gets a chunk of words
       responses:
@@ -525,13 +523,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Word"
+                  $ref: '#/components/schemas/Word'
   /words/all:
     get:
       tags:
         - Words
-      security:
-        []
+      security: []
       summary: Get all words
       description: Gets all words
       responses:
@@ -542,7 +539,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Word"
+                  $ref: '#/components/schemas/Word'
   /words/{id}:
     parameters:
       - name: id
@@ -554,8 +551,7 @@ paths:
     get:
       tags:
         - Words
-      security:
-        []
+      security: []
       summary: Get a word with assets by id
       description: Gets a word with assets by id
       responses:
@@ -564,13 +560,12 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/Word"
+                $ref: '#/components/schemas/Word'
   /users:
     post:
       tags:
         - Users
-      security:
-        []
+      security: []
       summary: Create a new user
       description: Creates a new user
       requestBody:
@@ -596,7 +591,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
         422:
           description: Incorrect e-mail or password
   /users/{id}:
@@ -618,7 +613,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
@@ -644,11 +639,11 @@ paths:
                   description: Password
       responses:
         200:
-          description: The user has been updated.
+          description: The user has been updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
         400:
           description: Bad request
         401:
@@ -682,7 +677,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Auth"
+                $ref: '#/components/schemas/Auth'
         403:
           $ref: '#/components/responses/UnauthenticatedError'
   /users/{id}/words:
@@ -706,7 +701,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/UserWord"
+                  $ref: '#/components/schemas/UserWord'
         402:
           $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/words/{wordId}:
@@ -753,7 +748,7 @@ paths:
                 optional:
                   type: object
                   items:
-                    type: any
+                    type: object
       responses:
         200:
           description: The user word has been created.
@@ -776,7 +771,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserWord"
+                $ref: '#/components/schemas/UserWord'
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
@@ -811,14 +806,14 @@ paths:
                 optional:
                   type: object
                   items:
-                    type: any
+                    type: object
       responses:
         200:
-          description: The user word has been updated.
+          description: The user word has been updated
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/UserWord"
+                $ref: '#/components/schemas/UserWord'
         400:
           description: Bad request
         401:
@@ -854,7 +849,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/DeletedWordsAmount"
+                  $ref: '#/components/schemas/DeletedWordsAmount'
         402:
           $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/aggregatedWords:
@@ -905,7 +900,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Word"
+                  $ref: '#/components/schemas/Word'
         401:
           $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/aggregatedWords/{wordId}:
@@ -933,7 +928,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserWord"
+                $ref: '#/components/schemas/UserWord'
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
@@ -957,7 +952,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/Setting"
+                $ref: '#/components/schemas/Setting'
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
@@ -981,14 +976,14 @@ paths:
                 optional:
                   type: object
                   items:
-                    type: any
+                    type: object
       responses:
         200:
-          description: The settings has been created.
+          description: The settings has been updated
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/Setting"
+                $ref: '#/components/schemas/Setting'
         400:
           description: Bad request
         401:
@@ -997,8 +992,7 @@ paths:
     post:
       tags:
         - Sign In
-      security:
-        []
+      security: []
       summary: Sign in
       description: Logins a user and returns a JWT-token
       requestBody:
@@ -1021,6 +1015,6 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Auth"
+                $ref: '#/components/schemas/Auth'
         403:
           description: Incorrect e-mail or password
