@@ -61,7 +61,7 @@ const schemas = {
     .keys({
       gameId: JoiObjectId().required(),
       bestSeries: Joi.number().integer().min(0).required(),
-      date: Joi.string().min(10).max(10).required(),
+      date: Joi.date().required(),
     }),
   wordStatisticParams: Joi.object({
     id: JoiObjectId(),
@@ -76,7 +76,7 @@ const schemas = {
       page: Joi.number().integer().min(0).max(29),
       correctAnswerTotal: Joi.number().integer().min(0),
       wrongAnswerTotal: Joi.number().integer().min(0),
-      studiedAt: Joi.string().min(10).max(10),
+      studiedAt: Joi.date(),
     }),
   settings: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
