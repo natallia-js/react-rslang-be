@@ -18,6 +18,11 @@ const UserWordsSchema = new Schema(
       required: false,
       default: false,
     },
+    isStudied: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     group: { type: Number, required: true, min: 0, max: 5 },
     page: { type: Number, required: true, min: 0, max: 29 },
     addedAt: { type: Date },

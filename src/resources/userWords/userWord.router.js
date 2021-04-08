@@ -35,7 +35,7 @@ router.put(
   validator(wordId, 'params'),
   validator(userWord, 'body'),
   async (req, res) => {
-    const word = await userWordService.update(req.params.wordId, req.userId, req.body);
+    const word = await userWordService.upsert(req.params.wordId, req.userId, req.body);
     res.status(OK).send(word.toResponse());
   }
 );

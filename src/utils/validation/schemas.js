@@ -41,11 +41,14 @@ const schemas = {
   userWord: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
+      id: JoiObjectId(),
+      wordId: JoiObjectId(),
       isDeleted: Joi.boolean(),
       isDifficult: Joi.boolean(),
+      isStudied: Joi.boolean(),
       group: Joi.number().integer().min(0).max(5).required(),
       page: Joi.number().integer().min(0).max(29).required(),
-      addedAt: Joi.string().min(10).max(10),
+      addedAt: Joi.date(),
       difficulty: Joi.string().max(50),
       optional: optionalScheme,
     }),

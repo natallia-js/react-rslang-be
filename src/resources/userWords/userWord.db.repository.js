@@ -67,17 +67,18 @@ const save = async (wordId, userId, userWord) => {
   }
 };
 
-const update = async (wordId, userId, userWord) => {
-  const updatedWord = await UserWord.findOneAndUpdate(
-    { wordId, userId },
-    { $set: userWord },
-    { new: true }
-  );
-  if (!updatedWord) {
-    throw new NOT_FOUND_ERROR(ENTITY_NAME, { wordId, userId });
-  }
+const upsert = async (wordId, userId, userWord) => {
+  const { isStudied } = userWord;
 
-  return updatedWord;
+  const update = { $set: userWord };
+  if (isStudied === false) {
+    update.$unset = { addedAt: '' };
+  }
+  return UserWord.findOneAndUpdate({ wordId, userId }, update, {
+    new: true,
+    setDefaultsOnInsert: true,
+    upsert: true,
+  });
 };
 
 const remove = async (wordId, userId) => UserWord.deleteOne({ wordId, userId });
@@ -88,5 +89,5 @@ module.exports = {
   getDeletedAmount,
   remove,
   save,
-  update,
+  upsert,
 };

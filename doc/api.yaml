@@ -91,6 +91,8 @@ components:
           type: string
         isDeleted:
           type: boolean
+        isStudied:
+          type: boolean
         isDifficult:
           type: boolean
         group:
@@ -734,6 +736,18 @@ paths:
               type: object
               title: example
               properties:
+                isDeleted:
+                  type: boolean
+                isDifficult:
+                  type: boolean
+                isStudied:
+                  type: boolean
+                group:
+                  type: number
+                page:
+                  type: number
+                addedAt:
+                  type: string
                 difficulty:
                   type: string
                 optional:
@@ -770,8 +784,8 @@ paths:
     put:
       tags:
         - Users/Words
-      summary: Update a user word
-      description: Updates a user word by id
+      summary: Upsert a user word
+      description: Upserts a user word by id
       requestBody:
         required: true
         content:
@@ -780,6 +794,18 @@ paths:
               type: object
               title: example
               properties:
+                isDeleted:
+                  type: boolean
+                isDifficult:
+                  type: boolean
+                isStudied:
+                  type: boolean
+                group:
+                  type: number
+                page:
+                  type: number
+                addedAt:
+                  type: string
                 difficulty:
                   type: string
                 optional:
